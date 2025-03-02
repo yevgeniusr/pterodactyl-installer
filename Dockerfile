@@ -93,6 +93,10 @@ RUN echo '#!/bin/sh' > /entrypoint.sh \
     && echo 'sed -i "s|^REDIS_HOST=.*|REDIS_HOST=$REDIS_HOST|g" .env' >> /entrypoint.sh \
     && echo 'sed -i "s|^REDIS_PASSWORD=.*|REDIS_PASSWORD=$REDIS_PASSWORD|g" .env' >> /entrypoint.sh \
     && echo 'sed -i "s|^REDIS_PORT=.*|REDIS_PORT=$REDIS_PORT|g" .env' >> /entrypoint.sh \
+    # Change redis host for coolify deployment if using external redis
+    && echo 'if [ "$REDIS_HOST" != "127.0.0.1" ] && [ "$REDIS_HOST" != "localhost" ]; then' >> /entrypoint.sh \
+    && echo '  sed -i "/^program:redis/,/^\[program:pterodactyl-worker\]/d" /etc/supervisord.conf' >> /entrypoint.sh \
+    && echo 'fi' >> /entrypoint.sh \
     && echo 'sed -i "s|^MAIL_DRIVER=.*|MAIL_DRIVER=$MAIL_DRIVER|g" .env' >> /entrypoint.sh \
     && echo 'sed -i "s|^MAIL_HOST=.*|MAIL_HOST=$MAIL_HOST|g" .env' >> /entrypoint.sh \
     && echo 'sed -i "s|^MAIL_PORT=.*|MAIL_PORT=$MAIL_PORT|g" .env' >> /entrypoint.sh \
@@ -217,6 +221,9 @@ VOLUME ["/var/www/pterodactyl/storage", "/var/www/pterodactyl/config", "/etc/ngi
 
 # Expose ports
 EXPOSE 80 443
+
+# Add healthcheck
+HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 CMD curl -f http://localhost/api/health || exit 1
 
 # Entry point
 ENTRYPOINT ["/entrypoint.sh"]

@@ -1,0 +1,91 @@
+{
+  "name": "pterodactyl-panel",
+  "description": "Pterodactyl Panel - Open-source game server management panel",
+  "logo": "https://pterodactyl.io/pterodactyl.svg",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pterodactyl/panel"
+  },
+  "env": [
+    {
+      "name": "APP_URL",
+      "description": "The full URL of your panel (with protocol, no trailing slash)",
+      "required": true
+    },
+    {
+      "name": "APP_TIMEZONE",
+      "description": "Timezone for the application",
+      "defaultValue": "UTC"
+    },
+    {
+      "name": "DB_HOST",
+      "description": "Database host",
+      "defaultValue": "database"
+    },
+    {
+      "name": "DB_PORT",
+      "description": "Database port",
+      "defaultValue": "3306"
+    },
+    {
+      "name": "DB_DATABASE",
+      "description": "Database name",
+      "defaultValue": "pterodactyl"
+    },
+    {
+      "name": "DB_USERNAME",
+      "description": "Database username",
+      "defaultValue": "pterodactyl"
+    },
+    {
+      "name": "DB_PASSWORD",
+      "description": "Database password",
+      "required": true
+    },
+    {
+      "name": "REDIS_HOST",
+      "description": "Redis host",
+      "defaultValue": "redis" 
+    },
+    {
+      "name": "REDIS_PORT",
+      "description": "Redis port",
+      "defaultValue": "6379"
+    },
+    {
+      "name": "REDIS_PASSWORD",
+      "description": "Redis password",
+      "defaultValue": "null"
+    },
+    {
+      "name": "ADMIN_USER_SETUP",
+      "description": "Set to true to create an admin user",
+      "defaultValue": "true"
+    },
+    {
+      "name": "ADMIN_EMAIL",
+      "description": "Admin email",
+      "defaultValue": "admin@example.com"
+    },
+    {
+      "name": "ADMIN_USERNAME",
+      "description": "Admin username",
+      "defaultValue": "admin"
+    },
+    {
+      "name": "ADMIN_FIRSTNAME",
+      "description": "Admin first name",
+      "defaultValue": "Admin"
+    },
+    {
+      "name": "ADMIN_LASTNAME",
+      "description": "Admin last name",
+      "defaultValue": "User"
+    },
+    {
+      "name": "ADMIN_PASSWORD",
+      "description": "Admin password",
+      "defaultValue": "Password123"
+    }
+  ]
+}
