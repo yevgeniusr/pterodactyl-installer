@@ -1,0 +1,73 @@
+version: '3.8'
+
+services:
+  panel:
+    build: .
+    container_name: pterodactyl_panel
+    restart: always
+    ports:
+      - "4200:4200"
+      - "4443:4443"
+    environment:
+      - APP_URL=http://localhost:4200
+      - APP_TIMEZONE=UTC
+      - DB_HOST=database
+      - DB_PORT=3306
+      - DB_DATABASE=pterodactyl
+      - DB_USERNAME=pterodactyl
+      - DB_PASSWORD=pterodactyl_password
+      - REDIS_HOST=localhost
+      - REDIS_PASSWORD=null
+      - REDIS_PORT=6379
+      - CACHE_DRIVER=redis
+      - SESSION_DRIVER=redis
+      - QUEUE_DRIVER=redis
+      - MAIL_DRIVER=smtp
+      - MAIL_HOST=mailhog
+      - MAIL_PORT=1025
+      - MAIL_USERNAME=null
+      - MAIL_PASSWORD=null
+      - MAIL_ENCRYPTION=null
+      - MAIL_FROM_ADDRESS=no-reply@example.com
+      - MAIL_FROM_NAME=Pterodactyl
+      # Admin user setup
+      - ADMIN_USER_SETUP=true
+      - ADMIN_EMAIL=admin@example.com
+      - ADMIN_USERNAME=admin
+      - ADMIN_FIRSTNAME=Admin
+      - ADMIN_LASTNAME=User
+      - ADMIN_PASSWORD=Password123
+    volumes:
+      - panel_storage:/var/www/pterodactyl/storage
+      - panel_config:/var/www/pterodactyl/config
+      - panel_certs:/etc/nginx/certs
+    depends_on:
+      - database
+      - mailhog
+
+  database:
+    image: mariadb:10.5
+    container_name: pterodactyl_database
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=root_password
+      - MYSQL_DATABASE=pterodactyl
+      - MYSQL_USER=pterodactyl
+      - MYSQL_PASSWORD=pterodactyl_password
+    volumes:
+      - database_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+
+  mailhog:
+    image: mailhog/mailhog:latest
+    container_name: pterodactyl_mail
+    restart: always
+    ports:
+      - "8025:8025"
+
+volumes:
+  panel_storage:
+  panel_config:
+  panel_certs:
+  database_data:
