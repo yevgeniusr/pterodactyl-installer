@@ -93,9 +93,9 @@ RUN echo '#!/bin/sh' > /entrypoint.sh \
     && echo 'sed -i "s|^REDIS_HOST=.*|REDIS_HOST=$REDIS_HOST|g" .env' >> /entrypoint.sh \
     && echo 'sed -i "s|^REDIS_PASSWORD=.*|REDIS_PASSWORD=$REDIS_PASSWORD|g" .env' >> /entrypoint.sh \
     && echo 'sed -i "s|^REDIS_PORT=.*|REDIS_PORT=$REDIS_PORT|g" .env' >> /entrypoint.sh \
-    # Change redis host for coolify deployment if using external redis
+    && echo '# Change redis host for coolify deployment if using external redis' >> /entrypoint.sh \
     && echo 'if [ "$REDIS_HOST" != "127.0.0.1" ] && [ "$REDIS_HOST" != "localhost" ]; then' >> /entrypoint.sh \
-    && echo '  sed -i "/^program:redis/,/^\[program:pterodactyl-worker\]/d" /etc/supervisord.conf' >> /entrypoint.sh \
+    && echo '  sed -i "/^\[program:redis\]/,/^\[program:pterodactyl-worker\]/d" /etc/supervisord.conf' >> /entrypoint.sh \
     && echo 'fi' >> /entrypoint.sh \
     && echo 'sed -i "s|^MAIL_DRIVER=.*|MAIL_DRIVER=$MAIL_DRIVER|g" .env' >> /entrypoint.sh \
     && echo 'sed -i "s|^MAIL_HOST=.*|MAIL_HOST=$MAIL_HOST|g" .env' >> /entrypoint.sh \
