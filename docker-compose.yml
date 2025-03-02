@@ -6,10 +6,10 @@ services:
     container_name: pterodactyl_panel
     restart: always
     ports:
-      - "4200:4200"
-      - "4443:4443"
+      - "80:80"
+      - "443:443"
     environment:
-      - APP_URL=http://localhost:4200
+      - APP_URL=http://localhost:80
       - APP_TIMEZONE=UTC
       - DB_HOST=database
       - DB_PORT=3306

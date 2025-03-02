@@ -122,7 +122,7 @@ RUN echo '#!/bin/sh' > /entrypoint.sh \
 
 # Create NGINX configuration
 RUN echo 'server {' > /etc/nginx/http.d/default.conf \
-    && echo '    listen 4200;' >> /etc/nginx/http.d/default.conf \
+    && echo '    listen 80;' >> /etc/nginx/http.d/default.conf \
     && echo '    server_name _;' >> /etc/nginx/http.d/default.conf \
     && echo '    root /var/www/pterodactyl/public;' >> /etc/nginx/http.d/default.conf \
     && echo '    index index.php;' >> /etc/nginx/http.d/default.conf \
@@ -215,7 +215,7 @@ RUN rm -rf /tmp/*
 VOLUME ["/var/www/pterodactyl/storage", "/var/www/pterodactyl/config", "/etc/nginx/certs"]
 
 # Expose ports
-EXPOSE 4200 4443
+EXPOSE 80 443
 
 # Entry point
 ENTRYPOINT ["/entrypoint.sh"]
