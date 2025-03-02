@@ -39,8 +39,6 @@ services:
       - ${VOLUME_DIR:-./volumes}/panel/storage:/var/www/pterodactyl/storage
       - ${VOLUME_DIR:-./volumes}/panel/config:/var/www/pterodactyl/config
       - ${VOLUME_DIR:-./volumes}/panel/certs:/etc/nginx/certs
-    labels:
-      coolify.managed: "true"
     depends_on:
       - database
       - redis
@@ -57,16 +55,12 @@ services:
       - ${VOLUME_DIR:-./volumes}/database:/var/lib/mysql
     ports:
       - "${DB_EXTERNAL_PORT:-3306}:3306"
-    labels:
-      coolify.managed: "true"
 
   redis:
     image: redis:alpine
     restart: always
     volumes:
       - ${VOLUME_DIR:-./volumes}/redis:/data
-    labels:
-      coolify.managed: "true"
 
 volumes:
   panel_storage:
