@@ -16,7 +16,7 @@ services:
       - DB_DATABASE=pterodactyl
       - DB_USERNAME=pterodactyl
       - DB_PASSWORD=pterodactyl_password
-      - REDIS_HOST=localhost
+      - REDIS_HOST=127.0.0.1
       - REDIS_PASSWORD=null
       - REDIS_PORT=6379
       - CACHE_DRIVER=redis
